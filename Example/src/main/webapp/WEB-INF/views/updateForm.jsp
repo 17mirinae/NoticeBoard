@@ -20,7 +20,7 @@
 </pre>
 <br>
 	<div class="container">
-		<form id="updateForm" name="updateForm" onsubmit="return false;" method="post">
+		<form id="updateForm" name="updateForm" onsubmit="return false;" method="post" enctype="multipart/form-data">
 			<div>
 				<div>
 					<table class="table table-striped table-hover">
@@ -30,19 +30,28 @@
 							<td><b>
 							<c:choose>
 								<c:when test="${member.type eq '자료'}">
-									<input type="radio" id="type" name="type" value="자료" checked>&nbsp; &nbsp; 자료&nbsp; &nbsp; &nbsp; 
-									<input type="radio" id="type" name="type" value="공지사항">&nbsp; &nbsp; 공지사항&nbsp; &nbsp; &nbsp;
-									<input type="radio" id="type" name="type" value="기타">&nbsp; &nbsp; 기타&nbsp; &nbsp; &nbsp;
+									<select id="type" name="type" style="text-align:center; border:solid; width:110px; height:30px;">
+										<option disabled selected>분류</option>
+										<option selected>자료</option>
+										<option>공지사항</option>
+										<option>기타</option>
+									</select>
 								</c:when>
 								<c:when test="${member.type eq '공지사항'}">
-									<input type="radio" id="type" name="type" value="자료">&nbsp; &nbsp; 자료&nbsp; &nbsp; &nbsp; 
-									<input type="radio" id="type" name="type" value="공지사항" checked>&nbsp; &nbsp; 공지사항&nbsp; &nbsp; &nbsp;
-									<input type="radio" id="type" name="type" value="기타">&nbsp; &nbsp; 기타&nbsp; &nbsp; &nbsp;
+									<select id="type" name="type" style="text-align:center; border:solid; width:110px; height:30px;">
+										<option disabled selected>분류</option>
+										<option>자료</option>
+										<option selected>공지사항</option>
+										<option>기타</option>
+									</select>
 								</c:when>
 								<c:otherwise>
-									<input type="radio" id="type" name="type" value="자료">&nbsp; &nbsp; 자료&nbsp; &nbsp; &nbsp; 
-									<input type="radio" id="type" name="type" value="공지사항">&nbsp; &nbsp; 공지사항&nbsp; &nbsp; &nbsp;
-									<input type="radio" id="type" name="type" value="기타" checked>&nbsp; &nbsp; 기타&nbsp; &nbsp; &nbsp;
+									<select id="type" name="type" style="text-align:center; border:solid; width:110px; height:30px;">
+										<option disabled selected>분류</option>
+										<option>자료</option>
+										<option>공지사항</option>
+										<option selected>기타</option>
+									</select>
 								</c:otherwise>
 							</c:choose>
 							</b></td>
@@ -61,7 +70,6 @@
 							<th>작성자</th>
 							<td>
 								<c:out value="${member.writer_name}"/>
-								<input type="hidden" id="num" name="num" value="<c:out value="${member.num}"/>">
 							</td>
 						</tr>
 						<tr>
@@ -70,10 +78,12 @@
 						</tr>
 					</c:forEach>
 					</table>
+					<c:forEach items="${memberList}" var="member">
 					<div align="right">
-						<a href='#' onClick='fn_updateBoard()' title="Complete"><img src="/resources/icon/check.png"></a>&nbsp; &nbsp; &nbsp; 
+						<a href='#' onClick='fn_updateBoard(${member.num})' title="Complete"><img src="/resources/icon/check.png"></a>&nbsp; &nbsp; &nbsp; 
 						&nbsp; &nbsp; &nbsp; <a href='/' title="Back"><img src="/resources/icon/odelete.png"></a>
 					</div>
+					</c:forEach>
 				</div>
 			</div>
 		</form>
@@ -81,11 +91,12 @@
 
 		<script>
 			//글쓰기
-			function fn_updateBoard() {
+			function fn_updateBoard(number) {
 				var form = document.getElementById("updateForm");
-			    
-			    form.action = "<c:url value='/update'/>";
-			    form.submit();
+				var url = "<c:url value='/update'/>";
+			  	url = url + "?num=" + number;
+				form.action = url;
+				form.submit();
 			}
 
 		</script>

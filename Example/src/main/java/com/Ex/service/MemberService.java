@@ -21,4 +21,6 @@ public interface MemberService {
 
 	public void updateBoard(MemberVO memberVO) throws Exception;
 
+	public void updateNum(int code) throws Exception;
+
 }

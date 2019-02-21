@@ -5,15 +5,15 @@
 
 <mapper namespace="com.Ex.mapper.memberMapper">
 	<!-- mybatis-config.xml의 typeAlias에 등록해두지 않았다면 <select id="selectAll" 
-		resultType="com.example.dto.MemberVO" > SELECT ID, PW ,NAME FROM TEST </select> 
+		resultType="com.example.dto.MemberVO" > SELECT num, type, title, content FROM TEST </select> 
 		이렇게 해야 한다. -->
 
 	<select id="selectAll" resultType="memberVO" parameterType="memberVO">
-		SELECT * FROM board_db ORDER BY num DESC;
+		SELECT * FROM board_db ORDER BY first_date DESC;
 		
 	</select>
 	<select id="selectSearch" resultType="memberVO" parameterType="memberVO">
-		SELECT * FROM board_db WHERE writer_name=#{value} ORDER BY num DESC;
+		SELECT * FROM board_db WHERE writer_name LIKE #{value} OR title LIKE #{value} OR type LIKE #{value}  ORDER BY num DESC;
 		
 	</select>
 	<select id="selectView" resultType="memberVO" parameterType="memberVO">
@@ -21,7 +21,7 @@
 		
 	</select>
 	<select id="selectUser" resultType="userVO" parameterType="userVO">
-		SELECT * FROM user_db;
+		SELECT * FROM user_db ORDER BY number;
 		
 	</select>
 	<delete id="deleteBoard" parameterType="memberVO">
@@ -33,7 +33,11 @@
 		
 	</update>
 	<insert id="insertBoard" parameterType="memberVO">
-		INSERT INTO board_db(num, title, writer_name, type, content) VALUES('121', #{title}, #{writer_name}, #{type}, #{content});
+		INSERT INTO board_db(num, title, writer_name, type, content) VALUES(#{num}, #{title}, #{writer_name}, #{type}, #{content});
 		
 	</insert>
+
+	<update id="updateNum"  parameterType="memberVO">
+		UPDATE board_db SET num=#{code}-1 WHERE num=#{code};
+	</update>
 </mapper>

@@ -57,5 +57,9 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.insert(Namespace + ".insertBoard", memberVO);
 	}
 	
+	@Override
+	public void updateNum(int code) throws Exception {
+		sqlSession.update(Namespace + ".updateNum", code);
+	}
 	
 }

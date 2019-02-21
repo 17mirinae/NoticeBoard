@@ -58,6 +58,10 @@ public class MemberServiceImpl implements MemberService {
 	public void updateBoard(MemberVO memberVO) throws Exception{
 		memberDAOService.updateBoard(memberVO);
 	}
-
+	
+	@Override
+	public void updateNum(int code) throws Exception{
+		memberDAOService.updateNum(code);
+	}
 
 }

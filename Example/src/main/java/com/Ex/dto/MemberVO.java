@@ -8,7 +8,8 @@ public class MemberVO {
 	private String update_date;
 	private String type;
 	private String content;
-	
+	private String filename;
+	private String fileupname;
 
 	// get num
 	public int getNum() {
@@ -59,7 +60,7 @@ public class MemberVO {
 	public void setUpdate_date(String update_date) {
 		this.update_date = update_date;
 	}
-	
+
 	// get type 분류
 	public String getType() {
 		return type;
@@ -69,14 +70,34 @@ public class MemberVO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	// get content 분류
+
+	// get content
 	public String getContent() {
 		return content;
 	}
 
-	// set content 분류
+	// set content
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	// get filename
+	public String getFilename() {
+		return filename;
+	}
+
+	// set filename
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	// get fileupname
+	public String getFileupname() {
+		return fileupname;
+	}
+
+	// set fileupname
+	public void setFileupname(String fileupname) {
+		this.fileupname = fileupname;
 	}
 }

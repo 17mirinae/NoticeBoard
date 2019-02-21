@@ -34,6 +34,14 @@
 							<td><c:out value="${member.title}"/></td>
 						</tr>
 						<tr>
+							<th>최초 게시일</th>
+							<td><c:out value="${member.first_date}" /></td>
+						</tr>
+						<tr>
+							<th>마지막 업데이트일</th>
+							<td><c:out value="${member.update_date}" /></td>
+						</tr>
+						<tr>	
 							<th>내용</th>
 							<td><c:out value="${member.content}"/></td>
 						</tr>
@@ -48,10 +56,15 @@
 						</c:forEach>
 					</table>
 					<c:forEach items="${memberList}" var="member">
-					<div align="right">
-						<a href='#' onClick='fn_update(${member.num})' title='Edit board'><img src="/resources/icon/edit_board.png"></a>
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href='#' onClick='fn_confirm(${member.num})' title='Delete board'><img src="/resources/icon/delete_board.png"></a>
-					</div>
+						<c:forEach items="${userList}" var="user">
+							<c:if test="${member.writer_name eq user.name}">
+						<div align="right">
+						<a href='#' onClick='fn_popUpdate(${user.number}, ${member.num})' title='Edit board'><img src="/resources/icon/edit_board.png"></a>
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href='#' onClick='fn_popDelete(${member.num}, ${user.number}, ${fn:length(boardList)})' title='Delete board'><img src="/resources/icon/delete_board.png"></a>
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href='/' title='List'><img src="/resources/icon/odelete.png"></a>
+						</div>
+							</c:if>
+						</c:forEach>
 					</c:forEach>
 				</div>
 			</div>
@@ -59,34 +72,50 @@
 		<script>
 			//수정
 			function fn_update(number) {
-
 				var form = document.getElementById("viewForm");
 				var url = "<c:url value='/updateForm' />";
 				url = url + "?num=" + number;
-
+			  
 				form.action = url;
 				form.submit();
 			}
-			
-			//삭제 확인 팝업
-			function fn_confirm(number)
+		
+			//수정 확인 팝업
+			function fn_popUpdate(passwd, number)
 			{
-			  var x = confirm("해당 게시물을 삭제하시겠습니까?");
-			  if (x)
-			      return fn_delete(number);
-			  else
-			    return false;
-			}
+				var userInput = prompt("작성자의 비밀번호를 입력하세요.");
+			 	if(userInput == passwd){
+			 		var x = confirm("해당 게시물을 수정하시겠습니까?");
+			 		 if (x)
+					      return fn_update(number);
+					  else
+					    return false;
+			 	}else
+			 		return false;
+			 }
+
+			//삭제 확인 팝업
+			function fn_popDelete(number, passwd, length)
+			{
+				var userInput = prompt("작성자의 비밀번호를 입력하세요.");
+			 	if(userInput == passwd){
+			 		var x = confirm("해당 게시물을 삭제하시겠습니까?");
+			 		 if (x)
+					      return fn_delete(number, length);
+					  else
+					    return false;
+			 	}else
+			 		return false;
+			 }
 
 			//삭제
-			function fn_delete(number) {
+			function fn_delete(number, length) {
 				var form = document.getElementById("viewForm");
 				var url = "<c:url value='/delete' />";
-				url = url + "?num=" + number;
+				url = url + "?length="+length+"&num=" + number;
 				
 			    form.action = url;
 				form.submit();
-				
 			}
 		</script>
 	</div>

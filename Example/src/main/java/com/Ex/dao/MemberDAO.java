@@ -20,5 +20,7 @@ public interface MemberDAO {
 	void deleteBoard(int code) throws Exception;
 	
 	void updateBoard(MemberVO memberVO) throws Exception;
+	
+	void updateNum(int code) throws Exception;
 
 }
