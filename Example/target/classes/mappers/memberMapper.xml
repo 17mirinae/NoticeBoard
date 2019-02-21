@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ex.mapper.memberMapper">
+	<!-- mybatis-config.xml의 typeAlias에 등록해두지 않았다면 <select id="selectAll" 
+		resultType="com.example.dto.MemberVO" > SELECT ID, PW ,NAME FROM TEST </select> 
+		이렇게 해야 한다. -->
+
+	<select id="selectAll" resultType="memberVO" parameterType="memberVO">
+		SELECT * FROM board_db ORDER BY num DESC;
+		
+	</select>
+	<select id="selectSearch" resultType="memberVO" parameterType="memberVO">
+		SELECT * FROM board_db WHERE writer_name=#{value} ORDER BY num DESC;
+		
+	</select>
+	<select id="selectView" resultType="memberVO" parameterType="memberVO">
+		SELECT * FROM board_db WHERE num=#{code};
+		
+	</select>
+	<select id="selectUser" resultType="userVO" parameterType="userVO">
+		SELECT * FROM user_db;
+		
+	</select>
+	<delete id="deleteBoard" parameterType="memberVO">
+		DELETE FROM board_db WHERE num=#{code};
+		
+	</delete>
+	<update id="updateBoard" parameterType="memberVO">
+		UPDATE board_db SET title=#{title}, type=#{type}, content=#{content} WHERE num=#{num};
+		
+	</update>
+	<insert id="insertBoard" parameterType="memberVO">
+		INSERT INTO board_db(num, title, writer_name, type, content) VALUES('121', #{title}, #{writer_name}, #{type}, #{content});
+		
+	</insert>
+</mapper>
