@@ -1,0 +1,18 @@
+디비 관련된 거 -> FileDAO 
+
+업로드 : DatailBox.jsp -> uploadAction.jsp ->(FileDAO.java) -> DetailBox.jsp
+
+uploadAction.jsp 기능 : 입력 받은 내용을 넣어주는 거
+FileDAO.java 기능 : 입력 받은 내용을 uploadAction 에서 받아와 디비랑 연결 
+
+삭제 : deleteForm.jsp -> deleteAction.jsp -> (FileDAO.java) -> Calendar.jsp
+
+deleteForm.jsp 기능 : DetailBox에서 삭제하고 싶은 메모를 클릭해서 삭제 버튼을 누르면 보여지는 화면
+deleteAction.jsp 기능 : 삭제 할 메모의 내용,제목,비밀번호를 입력하고 비밀번호와 일치하면 디비로 연결 시켜주기 위해서 FileDAO의 delete함수로 이동
+
+수정 : modifyForm.jsp -> modifyReForm.jsp -> (FileDAO.java) -> Calendar.jsp
+
+modifyForm.jsp 기능 : DetailBox에서 수정하고 싶은 메모를 클릭해서 수정 버튼을 누르면 보여지는 화면
+modifyReForm.jsp 기능 : 수정 할 메모의 내용,제목,비밀번호를 입력하고 비밀번호와 일치하면 원래 저장된 메모를 디비랑 연결시켜 주고 실제 실행은
+			modifyAction에서 된다
+modifyAction.jsp 기능 : modifyReForm에서 입력한 내용을 받아서 그 내용을 디비로 연결 시켜주기 위해서 FileDAO의 modify함수로 이동 
